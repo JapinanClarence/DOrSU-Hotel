@@ -5,6 +5,7 @@ import {
 } from "../middleware/validator.js";
 import {
   createReservation,
+  deleteBooking,
   getBookings,
   getUserBookings,
   updateBooking,
@@ -29,6 +30,12 @@ router.get(
   getUserBookings
 );
 router.get("/booking", authenticate, authorizeRole("admin"), getBookings);
+router.delete(
+  "/booking/:id",
+  authenticate,
+  authorizeRole("guest"),
+  deleteBooking
+);
 
 router.patch(
   "/booking/:id",

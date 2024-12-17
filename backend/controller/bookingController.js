@@ -77,6 +77,32 @@ export const getUserBookings = async (req, res) => {
 };
 
 
+export const deleteBooking = async (req, res) =>{
+    const bookingId = req.params.id;
+
+    try {
+        const booking = await Reservation.findByIdAndDelete(bookingId);
+
+        if(!booking){
+            return res.status(404).json({
+                success: false,
+                message: "Reservation not found"
+            })
+        }
+
+        res.status(200).json({
+            success: true,
+            message: "Booking deleted successfully"
+        })
+    } catch (err) {
+        return res.status(500).json({
+            success: false,
+            message: err.message,
+          });
+    }
+  }
+
+  /**Admin Booking Controller */
 
 export const getBookings = async (req, res) => {
     try {
