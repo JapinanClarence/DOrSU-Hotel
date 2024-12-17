@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { UserModel } from "../model/User.js";
+import UserModel from "../model/User.js";
 
 // JWT authentication middleware
 export const authenticate = (req, res, next) => {
@@ -24,7 +24,7 @@ export const authenticate = (req, res, next) => {
 export const authorizeRole = (...requiredRoles) => {
   const roleMapping = {
     admin: "0",
-    student: "1",
+    guest: "1",
   };
 
   return async (req, res, next) => {
@@ -35,10 +35,10 @@ export const authorizeRole = (...requiredRoles) => {
     }
 
     const user = await UserModel.findById(req.user.userId);
-    
+
     // Translate the required roles to their database values
     const allowedRoles = requiredRoles.map((user) => roleMapping[user]);
-  
+
     // Check if the user's role is in the list of allowed roles
     if (!allowedRoles.includes(user.role)) {
       return res.status(403).json({

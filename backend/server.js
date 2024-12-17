@@ -3,6 +3,7 @@ import express from "express";
 import cors from "cors";
 import auth from "./router/auth.js";
 import rooms from "./router/rooms.js";
+import booking from "./router/booking.js";
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use(cors());
 
 app.use("/api/", auth);
 app.use("/api/", rooms);
+app.use("/api/", booking);
 
 // Handle 404 errors for undefined routes
 app.use((req, res, next) => {
