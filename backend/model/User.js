@@ -66,14 +66,4 @@ userSchema.methods.comparePassword = async function (candidatePassword) {
 // Base UserModel
 const UserModel = mongoose.model("User", userSchema);
 
-//Student specific schema
-const StudentSchema = new mongoose.Schema({
-  studentId: { type: String },
-  birthday: { type: Date },
-  gender: {type: String},
-  contactNumber: { type: String },
-  course: { type: String },
-  year: {type: String},
-});
-
-export { UserModel, StudentModel, OrgAdminModel };
+export default UserModel;
