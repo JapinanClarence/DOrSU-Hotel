@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 /**
- * category: 
+ * category:
  * 0 - non-air
  * 1 - air conditioned
- * availability: 
+ * availability:
  * 0 - not available
  * 1 - available
  * bed Type:
@@ -14,14 +14,29 @@ import mongoose from "mongoose";
  */
 const roomsSchema = new mongoose.Schema(
   {
-    category: { type: String, enum: ["0", "1"] },
-    availability: { type: String, enum: ["0", "1"] },
-    desription: {
+    category: {
+      type: String,
+      enum: ["0", "1"],
+    },
+    availability: {
+      type: String,
+      enum: ["0", "1"],
+    },
+    description: {
       type: String,
     },
-    capacity: { type: Number, required: [true, "Capacity is required"] },
-    bedType: { type: String, enum: ["0", "1", "2", "3"] },
-    rate: { type: Number, required: [true, "Rate is required"] },
+    capacity: {
+      type: Number,
+      required: [true, "Capacity is required"],
+    },
+    bedType: {
+      type: String,
+      enum: ["0", "1", "2", "3"],
+    },
+    rate: {
+      type: Number,
+      required: [true, "Rate is required"],
+    },
   },
   { timestamps: true }
 );

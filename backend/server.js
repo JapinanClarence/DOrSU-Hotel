@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import express from "express";
 import cors from "cors";
 import auth from "./router/auth.js";
+import rooms from "./router/rooms.js";
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use(cors());
 
 
 app.use("/api/", auth);
+app.use("/api/", rooms);
 
 // Handle 404 errors for undefined routes
 app.use((req, res, next) => {
