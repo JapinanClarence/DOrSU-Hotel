@@ -117,12 +117,19 @@ export const deleteBooking = async (req, res) =>{
     try {
       // Find the reservation
       const booking = await Reservation.findById(bookingId);
-  
+        
       if (!booking) {
         return res.status(404).json({
           success: false,
           message: "Reservation not found",
         });
+      }
+
+      if(booking.status !== 1){
+        return res.status(400).json({
+            success: false,
+            message: "Current reservation is not active"
+        })
       }
   
       // Update payment details
@@ -169,7 +176,13 @@ export const deleteBooking = async (req, res) =>{
           message: "Reservation not found",
         });
       }
-  
+      
+      if(booking.status !== 1){
+        return res.status(400).json({
+            success: false,
+            message: "Current reservation is not active"
+        })
+      }
       // Update status 
       booking.status = status;
   

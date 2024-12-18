@@ -33,11 +33,11 @@ export const getTransactions = async (req, res) => {
             };
           } else if (log.eventType === "1") {
             let statusMessage = "";
-            if (log.details.status === "cancelled") {
+            if (log.details.status === "2") {
               statusMessage = `You've cancelled your reservation on ${new Date(
                 log.timestamp
               ).toLocaleString()}.`;
-            } else if (log.details.status === "checkedOut") {
+            } else if (log.details.status === "3") {
               statusMessage = `You have checked out of your reservation on ${new Date(
                 log.timestamp
               ).toLocaleString()}.`;
@@ -59,7 +59,7 @@ export const getTransactions = async (req, res) => {
         message: "No transactions found",
       });
     }
-    
+
     res.status(200).json({
       success: true,
       data: transactionData,
