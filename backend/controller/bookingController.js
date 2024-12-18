@@ -206,19 +206,31 @@ export const deleteBooking = async (req, res) =>{
     }
   }
 
+
+  /**Admin Booking Controller */
   export const updateBooking = async (req, res) =>{
     const bookingId = req.params.id;
-
+    const {status} = req.body
     try {
-        const booking = await Reservation.findByIdAndUpdate(bookingId, req.body);
-
+        const booking = await Reservation.findByIdAndUpdate(bookingId, {status});
+    
         if(!booking){
             return res.status(404).json({
                 success: false,
                 message: "Reservation not found"
             })
         }
+        //update room availability
+        const availability = status === "1" ? "0" : "1";
 
+        const updateRoom = await Rooms.findByIdAndUpdate(booking.room, {availability});
+ 
+        if (!updateRoom) {
+          return res.status(404).json({
+            success: false,
+            message: "Reservation not found",
+          });
+        }
         res.status(200).json({
             success: true,
             message: "Booking updated successfully"
@@ -230,8 +242,6 @@ export const deleteBooking = async (req, res) =>{
           });
     }
   }
-  /**Admin Booking Controller */
-
 export const getBookings = async (req, res) => {
     try {
       const reservation = await Reservation.find().populate("room user");
