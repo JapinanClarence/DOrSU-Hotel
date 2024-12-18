@@ -6,18 +6,32 @@ import rooms from "./router/rooms.js";
 import booking from "./router/booking.js";
 import transactions from "./router/transaction.js";
 
+const DB = process.env.DATABASE.replace("<PASSWORD>", process.env.DB_PASSWORD);
 const app = express();
 
 const PORT = process.env.PORT;
+const NODE_ENV = process.env.NODE_ENV;
 
-mongoose
-  .connect(process.env.DATABASE_LOCAL)
-  .then(() => {
-    console.log("Local DB connected successfully");
-  })
-  .catch((err) => {
-    console.error("DB connection error:", err);
-  });
+if (NODE_ENV === "development") {
+  mongoose
+    .connect(process.env.DATABASE_LOCAL)
+    .then(() => {
+      console.log("Local DB connected successfully");
+    })
+    .catch((err) => {
+      console.error("DB connection error:", err);
+    });
+} else if (NODE_ENV === "production") {
+  mongoose
+    .connect(DB)
+    .then(() => {
+      console.log("DB connected successfully");
+    })
+    .catch((err) => {
+      console.error("DB connection error:", err);
+    });
+}
+
 
 app.use(cors());
 
