@@ -91,7 +91,7 @@ const SearchField = () => {
                   defaultValue={field.value}
                 >
                   <FormControl>
-                    <SelectTrigger className="px-5 py-6">
+                    <SelectTrigger className="px-5 py-6  w-[200px]">
                       <SelectValue placeholder="Select bed type" />
                     </SelectTrigger>
                   </FormControl>

@@ -28,10 +28,13 @@ export const SignupSchema = z.object({
   path: ["confirmPassword"],
 });
 
-
 export const SearchSchema = z.object({
-  category: z.enum(["0","1"]).optional(),
-  capacity: z.number().optional(),
-  bedType:  z.enum(["0","1","2","3"]).optional(),
-  rate: z.number().optional(),
-})
+  category: z
+    .preprocess((val) => (val === "" ? undefined : val), z.enum(["0", "1"]).optional()),
+    capacity: z
+    .preprocess((val) => (val === "" || val == null ? undefined : Number(val)), z.number().optional()),
+  bedType: z
+    .preprocess((val) => (val === "" ? undefined : val), z.enum(["0", "1", "2", "3"]).optional()),
+    rate: z
+    .preprocess((val) => (val === "" || val == null ? undefined : Number(val)), z.number().optional()),
+});
