@@ -13,6 +13,11 @@ export const reservationValidationRules = () => [
   body("guestCount").notEmpty().withMessage("Guest count is required"),
   body("room").notEmpty().withMessage("Room is required"),
 ];
+
+export const paymentValidationRules = () => [
+  body("paymentAmount").notEmpty().withMessage("Payment amount is required"),
+  body("paymentMethod").notEmpty().withMessage("Payment method is required"),
+];
 // Middleware to handle validation errors
 export const validate = (req, res, next) => {
   const errors = validationResult(req);

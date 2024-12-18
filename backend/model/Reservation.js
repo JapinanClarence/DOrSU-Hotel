@@ -4,6 +4,14 @@ import mongoose from "mongoose";
  * 1 - confirmed
  * 2 - Cancelled
  * 3 - checkout
+ * 
+ * payment method:
+ * 0 - cash
+ * 1 - gcash
+ * 
+ * event type:
+ * 0 - payment
+ * 1 - Status change
  */
 const reservationSchema = new mongoose.Schema(
   {
@@ -32,11 +40,18 @@ const reservationSchema = new mongoose.Schema(
     },
     paymentMethod: {
       type: String,
-      enum: ["0", "1", "2"],
+      enum: ["0", "1"],
     },
     paymentAmount: {
       type: Number,
     },
+    logs:[
+      {
+        eventType: { type: String, enum: ["0", "1"]},
+        details: { type: Object},
+        timestamp: {type : Date, default: Date.now()}
+      }
+    ]
   },
   { timestamps: true }
 );

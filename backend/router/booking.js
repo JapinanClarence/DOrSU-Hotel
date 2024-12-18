@@ -1,5 +1,6 @@
 import express from "express";
 import {
+    paymentValidationRules,
   reservationValidationRules,
   validate,
 } from "../middleware/validator.js";
@@ -8,7 +9,9 @@ import {
   deleteBooking,
   getBookings,
   getUserBookings,
+  payReservation,
   updateBooking,
+  updateStatus,
 } from "../controller/bookingController.js";
 import authenticate, { authorizeRole } from "../middleware/authMiddleware.js";
 
@@ -45,4 +48,21 @@ router.patch(
   updateBooking
 );
 
+router.patch(
+    "/booking/:id/payment",
+    authenticate,
+    authorizeRole("guest"),
+    express.json(),
+    paymentValidationRules(),
+    validate,
+    payReservation
+  );
+
+  router.patch(
+    "/booking/:id/status",
+    authenticate,
+    authorizeRole("guest"),
+    express.json(),
+    updateStatus
+  );
 export default router;

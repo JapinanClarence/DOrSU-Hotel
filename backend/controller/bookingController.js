@@ -89,7 +89,15 @@ export const deleteBooking = async (req, res) =>{
                 message: "Reservation not found"
             })
         }
+        const updateRoom = await Rooms.findByIdAndUpdate(booking.room, {availability: "1"});
 
+        if (!updateRoom) {
+          return res.status(404).json({
+            success: false,
+            message: "Reservation not found",
+          });
+        }
+  
         res.status(200).json({
             success: true,
             message: "Booking deleted successfully"
@@ -102,6 +110,126 @@ export const deleteBooking = async (req, res) =>{
     }
   }
 
+  export const payReservation = async (req, res) => {
+    const bookingId = req.params.id;
+    const { paymentAmount, paymentMethod } = req.body;
+  
+    try {
+      // Find the reservation
+      const booking = await Reservation.findById(bookingId);
+  
+      if (!booking) {
+        return res.status(404).json({
+          success: false,
+          message: "Reservation not found",
+        });
+      }
+  
+      // Update payment details
+      booking.paymentAmount = paymentAmount;
+      booking.paymentMethod = paymentMethod;
+  
+      // Add a log entry for the payment
+      booking.logs.push({
+        eventType: "0",
+        details: {
+          paymentAmount: paymentAmount,
+          paymentMethod: paymentMethod,
+        },
+        timestamp: new Date(),
+      });
+  
+      // Save the updated reservation
+      await booking.save();
+  
+      res.status(200).json({
+        success: true,
+        message: "Payment recorded successfully",
+      });
+    } catch (err) {
+      return res.status(500).json({
+        success: false,
+        message: err.message,
+      });
+    }
+  };
+  
+  
+  export const updateStatus = async (req, res) =>{
+    const bookingId = req.params.id;
+    const { status } = req.body;
+  
+    try {
+      // Find the reservation
+      const booking = await Reservation.findById(bookingId);
+  
+      if (!booking) {
+        return res.status(404).json({
+          success: false,
+          message: "Reservation not found",
+        });
+      }
+  
+      // Update status 
+      booking.status = status;
+  
+      // Add a log entry for the payment
+      booking.logs.push({
+        eventType: "1",
+        details: {
+          status: status
+        },
+        timestamp: new Date(),
+      });
+  
+      // Save the updated reservation
+      await booking.save();
+  
+      const updateRoom = await Rooms.findByIdAndUpdate(booking.room, {availability: "1"});
+
+      if (!updateRoom) {
+        return res.status(404).json({
+          success: false,
+          message: "Reservation not found",
+        });
+      }
+
+      res.status(200).json({
+        success: true,
+        message: "Status updated successfully",
+      });
+    } catch (err) {
+      return res.status(500).json({
+        success: false,
+        message: err.message,
+      });
+    }
+  }
+
+  export const updateBooking = async (req, res) =>{
+    const bookingId = req.params.id;
+
+    try {
+        const booking = await Reservation.findByIdAndUpdate(bookingId, req.body);
+
+        if(!booking){
+            return res.status(404).json({
+                success: false,
+                message: "Reservation not found"
+            })
+        }
+
+        res.status(200).json({
+            success: true,
+            message: "Booking updated successfully"
+        })
+    } catch (err) {
+        return res.status(500).json({
+            success: false,
+            message: err.message,
+          });
+    }
+  }
   /**Admin Booking Controller */
 
 export const getBookings = async (req, res) => {
@@ -131,6 +259,8 @@ export const getBookings = async (req, res) => {
           lastname: data.user.lastname,
           middlename: data.user.middlename,
           email: data.user.email,
+          paymentAmount: data.paymentAmount,
+          paymentMethod: data.paymentMethod
         };
       });
   
@@ -146,27 +276,4 @@ export const getBookings = async (req, res) => {
     }
   };
 
-  export const updateBooking = async (req, res) =>{
-    const bookingId = req.params.id;
-
-    try {
-        const booking = await Reservation.findByIdAndUpdate(bookingId, req.body);
-
-        if(!booking){
-            return res.status(404).json({
-                success: false,
-                message: "Reservation not found"
-            })
-        }
-
-        res.status(200).json({
-            success: true,
-            message: "Booking updated successfully"
-        })
-    } catch (err) {
-        return res.status(500).json({
-            success: false,
-            message: err.message,
-          });
-    }
-  }
+ 
