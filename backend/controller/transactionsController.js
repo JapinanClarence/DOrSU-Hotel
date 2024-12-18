@@ -3,7 +3,7 @@ import UserModel from "../model/User.js";
 import Rooms from "../model/Rooms.js";
 
 export const getTransactions = async (req, res) => {
-  const user = req.params.id;
+  const user = req.user.userId;
 
   try {
     const reservations = await Reservation.find({ user })
@@ -17,9 +17,10 @@ export const getTransactions = async (req, res) => {
       });
     }
 
-      // Filter transactions based on logged events
-      const transactionData = reservations.flatMap((reservation) => {
-        return reservation.logs.map((log) => {
+    // Filter transactions based on logged events
+    const transactionData = reservations.flatMap((reservation) => {
+      return reservation.logs
+        .map((log) => {
           if (log.eventType === "0") {
             return {
               id: reservation.id,
@@ -28,7 +29,7 @@ export const getTransactions = async (req, res) => {
               } for your room reservation on ${new Date(
                 log.timestamp
               ).toLocaleString()}.`,
-              timestamp: log.timestamp
+              timestamp: log.timestamp,
             };
           } else if (log.eventType === "1") {
             let statusMessage = "";
@@ -44,13 +45,21 @@ export const getTransactions = async (req, res) => {
             return {
               id: reservation.id,
               message: statusMessage,
-              timestamp: log.timestamp
+              timestamp: log.timestamp,
             };
           }
           return null;
-        }).filter(Boolean); // Remove any null results
-      });
+        })
+        .filter(Boolean); // Remove any null results
+    });
 
+    if (transactionData <= 0) {
+      return res.status(200).json({
+        success: false,
+        message: "No transactions found",
+      });
+    }
+    
     res.status(200).json({
       success: true,
       data: transactionData,
