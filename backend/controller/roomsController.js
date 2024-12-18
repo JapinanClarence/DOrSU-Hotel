@@ -23,7 +23,30 @@ export const searchRoom = async (req, res) => {
 
     // Find rooms that are available and meet at least one of the conditions
     const rooms = await Rooms.find(query);
-  
+
+    return res.status(200).json({
+      success: true,
+      data: rooms,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+};
+
+export const getRooms = async (req, res) => {
+  try {
+    const rooms = await Rooms.find();
+
+    if (rooms <= 0) {
+      return res.status(200).json({
+        success: false,
+        message: "No rooms found",
+      });
+    }
+
     return res.status(200).json({
       success: true,
       data: rooms,
