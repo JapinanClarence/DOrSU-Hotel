@@ -11,14 +11,42 @@ const Header = () => {
       <div className="container mx-auto h-full">
         <div className="h-full flex items-center justify-between">
           <Link to={"/"}>
-            <img src={logo} alt="Website Logo" className="max-h-32 rounded-lg" />
+            <img
+              src={logo}
+              alt="Website Logo"
+              className="max-h-32 rounded-lg"
+            />
           </Link>
           <div className="flex items-center gap-2">
+            <Button
+              variant="link"
+              size="sm"
+              className="hover:no-underline hover:text-yellow-600"
+              // onClick={() => navigate("/login")}
+            >
+              Home
+            </Button>
+            <Button
+              variant="link"
+              size="sm"
+              className="hover:no-underline hover:text-yellow-600"
+              // onClick={() => navigate("/login")}
+            >
+              Rooms
+            </Button>
+            <Button
+              variant="link"
+              size="sm"
+            className="hover:no-underline hover:text-yellow-600"
+              // onClick={() => navigate("/login")}
+            >
+              Reservations
+            </Button>
             {pathname !== "/login" ? (
               <Button
                 variant="link"
                 size="sm"
-                className="hover:no-underline"
+               className="hover:no-underline hover:text-yellow-600"
                 onClick={() => navigate("/login")}
               >
                 Log In
@@ -27,7 +55,7 @@ const Header = () => {
               <Button
                 variant="link"
                 size="sm"
-                className="hover:no-underline"
+                className="hover:no-underline hover:text-yellow-600"
                 onClick={() => navigate("/register")}
               >
                 Sign up

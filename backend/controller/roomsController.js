@@ -2,7 +2,7 @@ import UserModel from "../model/User.js";
 import Rooms from "../model/Rooms.js";
 
 export const searchRoom = async (req, res) => {
-  const { category, capacity, bedType, rate } = req.query;
+  const { category, capacity, bedType, rate } = req.body;
 
   try {
     // Build the $or query array dynamically
