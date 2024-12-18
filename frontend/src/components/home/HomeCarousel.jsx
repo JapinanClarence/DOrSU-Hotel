@@ -54,7 +54,7 @@ const HomeCarousel = () => {
    useEffect(() =>{
     fetchRooms();
    }, [])
-   console.log(roomData)
+  
   return (
     <Carousel
       opts={{
