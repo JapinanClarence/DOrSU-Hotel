@@ -12,7 +12,6 @@ import AmenitiesCard from "@/components/home/AmenitiesCard";
 import { HandPlatter, Heater, Router, Vault } from "lucide-react";
 import rainbowvortex from "@/assets/rainbowvortex.svg";
 import reactSvg from "@/assets/react.svg";
-
 import Footer from "@/components/nav/Footer";
 
 const HomePage = () => {
