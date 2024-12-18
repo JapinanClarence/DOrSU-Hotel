@@ -13,11 +13,48 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { BedSingle, PhilippinePeso, Settings2, Users } from "lucide-react";
 import { Button } from "../ui/button";
+import apiClient from "@/api/axios";
+
+const categoryMap = {
+  0: "Non-airconditioned",
+  1:"Airconditioned"
+}
+
+const bedTypeMap = {
+  0: "Single",
+  1:"Double",
+  2:"Queen",
+  3: "King"
+}
 
 const HomeCarousel = () => {
+  const [roomData, setRoomData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const fetchRooms = async () =>{
+    try {
+      const { data } = await apiClient.get("/rooms");
+
+      if (data.success) {
+        
+        setRoomData(data.data.slice(0, 5));
+      } else {
+        setRoomData([]);
+      }
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
+  }
+
+   useEffect(() =>{
+    fetchRooms();
+   }, [])
+   console.log(roomData)
   return (
     <Carousel
       opts={{
@@ -26,7 +63,7 @@ const HomeCarousel = () => {
       className="w-full"
     >
       <CarouselContent>
-        {Array.from({ length: 5 }).map((_, index) => (
+        {roomData.map((data, index) => (
           <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
             <div className="p-1">
               <Card className="">
@@ -35,7 +72,7 @@ const HomeCarousel = () => {
                 </CardHeader>
                 <CardContent className="p-5">
                   <CardDescription>
-                    Spacious air-conditioned room with modern amenities.
+                    {data.description}
                   </CardDescription>
                   <div className="mt-5">
                     <div className="flex justify-between">
@@ -44,7 +81,7 @@ const HomeCarousel = () => {
                         Category
                       </div>
                       <p className="col-span-4 font-medium">
-                        {"Airconditioned"}
+                        {categoryMap[data.category]}
                       </p>
                     </div>
                     <div className="flex justify-between">
@@ -52,20 +89,20 @@ const HomeCarousel = () => {
                         <BedSingle className="my-auto inline" size={18} /> Bed
                         Type
                       </div>
-                      <p className="col-span-4 font-medium">{"Double"}</p>
+                      <p className="col-span-4 font-medium">{bedTypeMap[data.bedType]}</p>
                     </div>
                     <div className="flex justify-between">
                       <div className="flex-shrink text-sm">
                         <Users className="my-auto inline" size={18} /> Capacity
                       </div>
-                      <p className="col-span-4 font-medium">{"5 persons"}</p>
+                      <p className="col-span-4 font-medium">{`${data.capacity} persons`}</p>
                     </div>
                     <div className="flex justify-between">
                       <div className="flex-shrink text-sm">
                         <PhilippinePeso className="my-auto inline" size={18} />{" "}
                         Rate
                       </div>
-                      <p className="col-span-4 font-medium">{"$500"}</p>
+                      <p className="col-span-4 font-medium">{data.rate}</p>
                     </div>
                   </div>
                 </CardContent>

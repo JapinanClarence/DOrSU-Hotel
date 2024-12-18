@@ -6,8 +6,8 @@ import authenticate, { authorizeRole } from "../middleware/authMiddleware.js";
 const router = express.Router();
 
 
-router.post("/rooms", authenticate, authorizeRole("guest"), searchRoom );
+router.post("/rooms", express.json(),searchRoom );
 
-router.get("/rooms", authenticate, authorizeRole("guest", "admin"), getRooms );
+router.get("/rooms", getRooms );
 
 export default router;
