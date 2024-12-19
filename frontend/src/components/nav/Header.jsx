@@ -101,6 +101,7 @@ const Header = () => {
                     <DropdownMenuLabel>My Account</DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem>Profile</DropdownMenuItem>
+                    <DropdownMenuItem>Transactions</DropdownMenuItem>
                     <DropdownMenuItem  onClick={handleLogout}>Logout</DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
