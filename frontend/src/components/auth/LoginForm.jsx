@@ -10,6 +10,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginSchema } from "../schema";
 import { useAuth } from "@/context/AuthContext";
+import { LoaderCircle } from "lucide-react";
 import {
   Form,
   FormControl,
@@ -138,7 +139,11 @@ export function LoginForm({ className, ...props }) {
                   )}
                 />
                 <Button type="submit" className="w-full">
-                  Login
+                  {isSubmitting ? (
+                    <LoaderCircle className="animate-spin" />
+                  ) : (
+                    "Login"
+                  )}
                 </Button>
                 <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
                   <span className="relative z-10 bg-background px-2 text-muted-foreground">
