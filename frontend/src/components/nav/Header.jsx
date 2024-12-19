@@ -81,7 +81,7 @@ const Header = () => {
                   variant="link"
                   size="sm"
                   className="hover:no-underline hover:text-yellow-600"
-                  // onClick={() => navigate("/login")}
+                  onClick={() => navigate("/reservations")}
                 >
                   Reservations
                 </Button>

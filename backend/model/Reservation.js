@@ -8,6 +8,7 @@ import mongoose from "mongoose";
  * payment method:
  * 0 - cash
  * 1 - gcash
+ * 2 - card
  * 
  * event type:
  * 0 - payment
@@ -40,7 +41,7 @@ const reservationSchema = new mongoose.Schema(
     },
     paymentMethod: {
       type: String,
-      enum: ["0", "1"],
+      enum: ["0", "1", "2"],
     },
     paymentAmount: {
       type: Number,

@@ -16,6 +16,13 @@ export const createReservation = async (req, res, next) => {
       });
     }
 
+    if(isExisted.availability == "0"){
+      return res.status(400).json({
+        success: false,
+        message: "Rooms is not available."
+      })
+    }
+
     await Reservation.create({
       user,
       room,
@@ -40,7 +47,7 @@ export const getUserBookings = async (req, res) => {
   const user = req.params.id;
 
   try {
-    const reservation = await Reservation.find({ user }).populate("room");
+    const reservation = await Reservation.find({ user }).populate("room").sort({createdAt: -1});
 
     if (!reservation) {
       return res.status(404).json({
@@ -128,7 +135,7 @@ export const deleteBooking = async (req, res) =>{
       if(booking.status !== 1){
         return res.status(400).json({
             success: false,
-            message: "Current reservation is not active"
+            message: "Reservation is waiting for approval"
         })
       }
   

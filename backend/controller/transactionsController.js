@@ -25,7 +25,11 @@ export const getTransactions = async (req, res) => {
             return {
               id: reservation.id,
               message: `You've paid ${log.details.paymentAmount} in ${
-                log.details.paymentMethod === 1 ? "GCash" : "Cash"
+                log.details.paymentMethod === 1
+                  ? "GCash"
+                  : log.details.paymentMethod === 2
+                  ? "Card"
+                  : "Cash"
               } for your room reservation on ${new Date(
                 log.timestamp
               ).toLocaleString()}.`,

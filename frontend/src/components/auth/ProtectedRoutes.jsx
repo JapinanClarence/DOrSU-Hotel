@@ -25,7 +25,7 @@ const ProtectedRoutes = ({ allowedRoles }) => {
   return isAuthenticated && mappedAllowedRoles.includes(userRole) ? (
     <Outlet />
   ) : (
-    <Navigate to="/login" state={{ from: location }} replace />
+    <Navigate to="/" state={{ from: location }} replace />
   );
 };
 
