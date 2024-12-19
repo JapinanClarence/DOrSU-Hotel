@@ -11,15 +11,24 @@ import CheckoutPage from "./pages/CheckoutPage";
 function App() {
   return (
     <>
-    <Toaster/>
+      <Toaster />
       <Routes>
         <Route path="/">
           <Route path="/" element={<MainLayout />}>
             <Route index element={<HomePage />} />
-            <Route path="/login" element={<LoginPage/>}/>
-            <Route path="/" element={<ProtectedRoutes allowedRoles={["guest"]} />}>
-              <Route path="/reservations" element={<ReservationPage/>}/>
-              <Route path="/reservations/checkout" element={<CheckoutPage/>}/>
+            <Route path="/login" element={<LoginPage />} />
+            
+            <Route
+              path="/"
+              element={<ProtectedRoutes allowedRoles={["guest", "admin"]} />}
+            >
+              <Route path="/reservations" element={<ReservationPage />} />
+            </Route>
+            <Route
+              path="/"
+              element={<ProtectedRoutes allowedRoles={["guest"]} />}
+            >
+              <Route path="/reservations/checkout" element={<CheckoutPage />} />
             </Route>
           </Route>
         </Route>

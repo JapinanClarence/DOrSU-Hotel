@@ -319,7 +319,7 @@ export const updateBooking = async (req, res) => {
 };
 export const getBookings = async (req, res) => {
   try {
-    const reservation = await Reservation.find().populate("room user");
+    const reservation = await Reservation.find().populate("room user").sort({createdAt : -1});
 
     if (!reservation) {
       return res.status(404).json({
