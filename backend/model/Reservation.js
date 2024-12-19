@@ -4,6 +4,7 @@ import mongoose from "mongoose";
  * 1 - confirmed
  * 2 - Cancelled
  * 3 - checkout
+ * 4 - payed
  * 
  * payment method:
  * 0 - cash
@@ -36,7 +37,7 @@ const reservationSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ["0", "1", "2", "3"],
+      enum: ["0", "1", "2", "3", "4"],
       default: "0"
     },
     paymentMethod: {

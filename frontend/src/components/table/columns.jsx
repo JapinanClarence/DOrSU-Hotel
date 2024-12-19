@@ -10,7 +10,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
-import { Ban, ChevronDown, CircleCheck, LogOut, Timer } from "lucide-react";
+import { BadgeCheck, Ban, ChevronDown, CircleCheck, LogOut, Timer } from "lucide-react";
 import { dateOnly } from "@/util/helpers";
 
 
@@ -197,6 +197,13 @@ export const columns = (onApprove) => [
             <LogOut strokeWidth={2} size={15} className="inline-block mr-1" />
           ),
         },
+        4:{
+            name: "Payed",
+            color: "bg-green-600",
+            icon: (
+              <BadgeCheck strokeWidth={2} size={15} className="inline-block mr-1" />
+            ),
+        }
       };
 
       const status = statusMap[row.getValue("status")];

@@ -175,7 +175,7 @@ export const payReservation = async (req, res) => {
         message: "Reservation not found",
       });
     }
-    
+
     if (booking.status != 1) {
       return res.status(400).json({
         success: false,
@@ -195,7 +195,8 @@ export const payReservation = async (req, res) => {
     // Update payment details
     booking.paymentAmount = paymentAmount;
     booking.paymentMethod = paymentMethod;
-
+    booking.status = "4";
+    
     // Add a log entry for the payment
     booking.logs.push({
       eventType: "0",
