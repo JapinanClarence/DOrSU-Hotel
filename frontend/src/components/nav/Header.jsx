@@ -87,7 +87,7 @@ const Header = () => {
                 </Button>
 
                 <DropdownMenu>
-                  <DropdownMenuTrigger>
+                  <DropdownMenuTrigger asChild>
                     <Button
                       variant="link"
                       size="sm"
