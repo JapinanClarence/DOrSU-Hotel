@@ -13,7 +13,7 @@ export const getTransactions = async (req, res) => {
     if (!reservations) {
       return res.status(404).json({
         success: false,
-        message: "Room does not exists",
+        message: "Room does not exist",
       });
     }
 
@@ -22,15 +22,16 @@ export const getTransactions = async (req, res) => {
       return reservation.logs
         .map((log) => {
           if (log.eventType === "0") {
+            const paymentMethod =
+              log.details.paymentMethod === "1"
+                ? "GCash"
+                : log.details.paymentMethod === "2"
+                ? "Card"
+                : "Cash";
+
             return {
               id: reservation.id,
-              message: `You've paid ${log.details.paymentAmount} in ${
-                log.details.paymentMethod === 1
-                  ? "GCash"
-                  : log.details.paymentMethod === 2
-                  ? "Card"
-                  : "Cash"
-              } for your room reservation on ${new Date(
+              message: `You've paid ${log.details.paymentAmount} via ${paymentMethod} for your room reservation on ${new Date(
                 log.timestamp
               ).toLocaleString()}.`,
               timestamp: log.timestamp,
@@ -57,7 +58,7 @@ export const getTransactions = async (req, res) => {
         .filter(Boolean); // Remove any null results
     });
 
-    if (transactionData <= 0) {
+    if (transactionData.length === 0) {
       return res.status(200).json({
         success: false,
         message: "No transactions found",

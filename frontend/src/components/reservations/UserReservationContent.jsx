@@ -7,25 +7,37 @@ import { Button } from "@/components/ui/button";
 import ReservationCard from "@/components/reservations/ReservationCard";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { formatDate } from "@/util/helpers";
 
 const UserReservationContent = () => {
   const [loading, setLoading] = useState(true);
   const [bookingData, setBookingData] = useState([]);
   const [currentBooking, setCurrentBooking] = useState("");
-  //   const [showCheckOut, setShowCheckOut] = useState(false);
+    const [showCheckOut, setShowCheckOut] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const { token, userData } = useAuth();
   const { toast } = useToast();
   const navigate = useNavigate();
-
-//   const form = useForm({
-//     resolver: zodResolver(),
-//     defaultValues: {
-//       paymentMethod: "",
-//       paymentAmount: "",
-//     },
-//   });
+ const date = formatDate(Date.now());
+  //   const form = useForm({
+  //     resolver: zodResolver(),
+  //     defaultValues: {
+  //       paymentMethod: "",
+  //       paymentAmount: "",
+  //     },
+  //   });
 
   const fetchBookings = async () => {
     try {
@@ -51,11 +63,43 @@ const UserReservationContent = () => {
     fetchBookings();
   }, []);
 
-  const handleCheckOut = (id) => {
+  const handleNavigatetoPayment = (id) => {
     navigate(`/reservations/checkout?id=${id}`);
     // setShowCheckOut(true);
     // setCurrentBooking(data);
   };
+  const handleCheckOut = (id) => {
+    setShowCheckOut(true);
+    setCurrentBooking(id);
+  };
+
+  const onCheckOut = async() =>{
+    try {
+
+        const res = await apiClient.patch(
+          `/booking/${currentBooking}/status`,
+          { status: "3" },
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        );
+  
+        if (res) {
+       
+  
+          toast({
+            title: `Reservation status has been updated`,
+            description: `${date}`,
+          });
+          await fetchBookings();
+        }
+      } catch (error) {
+        const message = error;
+        console.log(message);
+      }
+  }
 
   const handleClick = (data) => {
     console.log(data);
@@ -68,8 +112,9 @@ const UserReservationContent = () => {
             <ReservationCard
               key={index}
               data={data}
-              onCheckOut={handleCheckOut}
+              onPay={handleNavigatetoPayment}
               onClick={handleClick}
+              onCheckOut={handleCheckOut}
             />
           ))}
         </div>
@@ -84,6 +129,20 @@ const UserReservationContent = () => {
           </Button>
         </div>
       )}
+      <AlertDialog open={showCheckOut} onOpenChange={setShowCheckOut}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This action cannot be undone. Booking transaction will be cancelled.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={onCheckOut}>Continue</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   );
 };

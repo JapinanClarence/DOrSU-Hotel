@@ -49,7 +49,7 @@ export const getUserBookings = async (req, res) => {
   try {
     const reservation = await Reservation.find({
       user,
-      status: { $in: [0, 1] },
+      status: { $in: [0, 1, 4] },
     })
       .populate("room")
       .sort({ createdAt: -1 });
@@ -197,15 +197,17 @@ export const payReservation = async (req, res) => {
     booking.paymentMethod = paymentMethod;
     booking.status = "4";
     
-    // Add a log entry for the payment
-    booking.logs.push({
-      eventType: "0",
-      details: {
-        paymentAmount: paymentAmount,
-        paymentMethod: paymentMethod,
-      },
-      timestamp: new Date(),
-    });
+   // Add a log entry for the payment
+   booking.logs.push({
+    eventType: "0", // Event type 0 for payments
+    details: {
+      paymentAmount,
+      paymentMethod,
+      status: "4", // Explicitly log the payment status
+    },
+    timestamp: new Date(),
+  });
+
 
     // Save the updated reservation
     await booking.save();
@@ -237,7 +239,7 @@ export const updateStatus = async (req, res) => {
       });
     }
 
-    if (booking.status !== 1) {
+    if (booking.status !== "1" && booking.status !== "4") {
       return res.status(400).json({
         success: false,
         message: "Current reservation is not active",

@@ -22,12 +22,13 @@ const bedTypeMap = {
   3: "King",
 };
 
-const ReservationCard = ({ data, onCheckOut, onClick }) => {
+const ReservationCard = ({ data, onPay, onCheckOut, onClick }) => {
   const statusMap = {
     0: { name: "Pending", color: "bg-zinc-500" },
     1: { name: "Confirmed", color: "bg-green-600" },
     2: { name: "Cancelled", color: "bg-yellow-600" },
     3: { name: "Checkout", color: "bg-red-600" },
+    4: { name: "Payed", color: "bg-blue-600" },
   };
 
   const badgeCategory = statusMap[data.status] || {
@@ -35,9 +36,14 @@ const ReservationCard = ({ data, onCheckOut, onClick }) => {
     color: "bg-gray-500",
   };
 
-  const handleCheckOutClick = (e) => {
+  const handlePayment = (e) => {
     e.stopPropagation(); // Stop the onClick event from propagating
-    onCheckOut(data.id)
+    onPay(data.id)
+  }
+
+  const handleCheckOutClick = (e) =>{
+    e.stopPropagation(); 
+    onCheckOut(data.id);
   }
   return (
     <Card className="" onClick={() => onClick(data.id)}>
@@ -83,8 +89,11 @@ const ReservationCard = ({ data, onCheckOut, onClick }) => {
         </div>
       </CardContent>
       <CardFooter className="pb-4 px-4">
-        <Button size="sm" className="text-xs" onClick={handleCheckOutClick}>
-          Check Out
+        <Button size="sm" className={data.status == 4 ? `hidden` :"text-xs"} onClick={handlePayment}>
+          Go to payment
+        </Button>
+        <Button size="sm" className={data.status == 4 ? `text-xs` :"hidden"} onClick={handleCheckOutClick}>
+          Checkout
         </Button>
       </CardFooter>
     </Card>
