@@ -6,6 +6,7 @@ import LoginPage from "./pages/LoginPage";
 import { Toaster } from "./components/ui/toaster";
 import ProtectedRoutes from "./components/auth/ProtectedRoutes";
 import ReservationPage from "./pages/ReservationPage";
+import CheckoutPage from "./pages/CheckoutPage";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
             <Route path="/login" element={<LoginPage/>}/>
             <Route path="/" element={<ProtectedRoutes allowedRoles={["guest"]} />}>
               <Route path="/reservations" element={<ReservationPage/>}/>
+              <Route path="/reservations/checkout" element={<CheckoutPage/>}/>
             </Route>
           </Route>
         </Route>

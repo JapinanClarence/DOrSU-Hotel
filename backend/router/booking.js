@@ -7,6 +7,7 @@ import {
 import {
   createReservation,
   deleteBooking,
+  findBooking,
   getBookings,
   getUserBookings,
   payReservation,
@@ -32,6 +33,7 @@ router.get(
   authorizeRole("guest"),
   getUserBookings
 );
+router.get("/booking/:id", authenticate, authorizeRole("guest"), findBooking);
 
 router.delete(
   "/booking/:id",

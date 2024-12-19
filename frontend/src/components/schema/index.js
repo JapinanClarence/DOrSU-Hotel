@@ -64,3 +64,13 @@ export const BookingSchema = z.object({
     z.number().optional()
   ),
 });
+
+export const PaymentSchema = z.object({
+  paymentMethod: z.string().min(1, "Payment method is required"),
+  paymentAmount: z.preprocess(
+    (val) => Number(val),
+    z.number().min(1, {
+      message: "Payment amount is required",
+    })
+  ),
+});

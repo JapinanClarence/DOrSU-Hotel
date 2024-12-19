@@ -22,7 +22,7 @@ const bedTypeMap = {
   3: "King",
 };
 
-const ReservationCard = ({ data, onClick }) => {
+const ReservationCard = ({ data, onCheckOut, onClick }) => {
   const statusMap = {
     0: { name: "Pending", color: "bg-zinc-500" },
     1: { name: "Confirmed", color: "bg-green-600" },
@@ -34,22 +34,27 @@ const ReservationCard = ({ data, onClick }) => {
     name: "Unknown",
     color: "bg-gray-500",
   };
+
+  const handleCheckOutClick = (e) => {
+    e.stopPropagation(); // Stop the onClick event from propagating
+    onCheckOut(data.id)
+  }
   return (
-    <Card className="">
+    <Card className="" onClick={() => onClick(data.id)}>
       <CardHeader className="p-0">
         <div className={`h-40 bg-slate-200`}></div>
       </CardHeader>
       <CardContent className="p-4">
         <CardDescription>{data.description}</CardDescription>
         <div className="mt-5 flex justify-end">
-            {badgeCategory.name && (
-              <Badge
-                className={`hidden font-normal md:inline ${badgeCategory.color} text-xs text-white hover:${badgeCategory.color}`}
-              >
-                {badgeCategory.name}
-              </Badge>
-            )}
-          </div>
+          {badgeCategory.name && (
+            <Badge
+              className={`hidden font-normal md:inline ${badgeCategory.color} text-xs text-white hover:${badgeCategory.color}`}
+            >
+              {badgeCategory.name}
+            </Badge>
+          )}
+        </div>
         <div className="mt-2 text-xs">
           <div className="flex justify-between">
             <div className="flex-shrink">
@@ -75,11 +80,10 @@ const ReservationCard = ({ data, onClick }) => {
             </div>
             <p className=" font-medium ">{data.rate}</p>
           </div>
-         
         </div>
       </CardContent>
       <CardFooter className="pb-4 px-4">
-        <Button size="sm" className="text-xs" onClick={() => onClick(data)}>
+        <Button size="sm" className="text-xs" onClick={handleCheckOutClick}>
           Check Out
         </Button>
       </CardFooter>
