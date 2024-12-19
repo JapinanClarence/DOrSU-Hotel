@@ -2,10 +2,30 @@ import React from "react";
 import logo from "@/assets/DOrSU Hotel logo.png";
 import { Button } from "@/components/ui/button";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "@/context/AuthContext";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const Header = () => {
+  const { isAuthenticated, userData, logout } = useAuth();
+
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const handleLogout = () => {
+    logout();
+  };
   return (
     <nav className="h-[100px] w-full border-b border-slate-200 z-50 shadow-sm">
       <div className="container mx-auto h-full">
@@ -22,7 +42,7 @@ const Header = () => {
               variant="link"
               size="sm"
               className="hover:no-underline hover:text-yellow-600"
-              onClick={() => navigate("/login")}
+              onClick={() => navigate("/")}
             >
               Home
             </Button>
@@ -34,44 +54,58 @@ const Header = () => {
             >
               Rooms
             </Button>
-            <Button
-              variant="link"
-              size="sm"
-            className="hover:no-underline hover:text-yellow-600"
-              // onClick={() => navigate("/login")}
-            >
-              Reservations
-            </Button>
-            {pathname !== "/login" ? (
-              <Button
-                variant="link"
-                size="sm"
-               className="hover:no-underline hover:text-yellow-600"
-                onClick={() => navigate("/login")}
-              >
-                Log In
-              </Button>
-            ) : (
-              <Button
-                variant="link"
-                size="sm"
-                className="hover:no-underline hover:text-yellow-600"
-                onClick={() => navigate("/register")}
-              >
-                Sign up
-              </Button>
-            )}
 
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => {
-                window.open("https://mail.google.com/", "_blank");
-              }}
-              className="hidden md:block"
-            >
-              Contact
-            </Button>
+            {!isAuthenticated ? (
+              <>
+                <Button
+                  variant="link"
+                  size="sm"
+                  className="hover:no-underline hover:text-yellow-600"
+                  onClick={() => navigate("/login")}
+                >
+                  Log In
+                </Button>
+
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => navigate("/register")}
+                  className="hidden md:block"
+                >
+                  Sign up
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button
+                  variant="link"
+                  size="sm"
+                  className="hover:no-underline hover:text-yellow-600"
+                  // onClick={() => navigate("/login")}
+                >
+                  Reservations
+                </Button>
+
+                <DropdownMenu>
+                  <DropdownMenuTrigger>
+                    <Button
+                      variant="link"
+                      size="sm"
+                      className="hover:no-underline hover:text-yellow-600"
+                      // onClick={() => navigate("/login")}
+                    >
+                      {userData.email}
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>Profile</DropdownMenuItem>
+                    <DropdownMenuItem  onClick={handleLogout}>Logout</DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </>
+            )}
           </div>
         </div>
       </div>

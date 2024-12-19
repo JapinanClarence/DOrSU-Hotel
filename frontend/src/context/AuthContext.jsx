@@ -55,7 +55,7 @@ export const AuthProvider = ({ children }) => {
     setToken(null);
     setUserData(null);
     setIsAuthenticated(false);
-    navigate("/login");
+    navigate("/");
   };
   
   useEffect(() => {
