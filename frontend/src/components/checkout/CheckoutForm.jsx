@@ -27,6 +27,7 @@ import BookingData from "./BookingData";
 import GCashDialog from "./GCashDialog";
 import CardDialog from "./CardDialog";
 import { LoaderCircle } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const CheckoutForm = ({ data }) => {
   const { token, userData } = useAuth();
@@ -37,7 +38,8 @@ const CheckoutForm = ({ data }) => {
   const [showCardDialog, setShowCardDialog] = useState(false);
   const searchParams = new URLSearchParams(location.search);
   const bookingId = searchParams.get("id");
-
+  const navigate = useNavigate();
+  
   const form = useForm({
     resolver: zodResolver(PaymentSchema),
     defaultValues: {
@@ -60,7 +62,7 @@ const CheckoutForm = ({ data }) => {
         }
       );
       if (response) {
-        login(response.data.token, response.data.data);
+        console.log(response)
         navigate("/");
       }
     } catch (error) {

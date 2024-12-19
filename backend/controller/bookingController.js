@@ -175,8 +175,8 @@ export const payReservation = async (req, res) => {
         message: "Reservation not found",
       });
     }
-
-    if (booking.status !== 1) {
+    
+    if (booking.status != 1) {
       return res.status(400).json({
         success: false,
         message: "Reservation is waiting for approval, please try again later.",
