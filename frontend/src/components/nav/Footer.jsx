@@ -13,7 +13,7 @@ const Footer = () => {
           backgroundPosition: "center",
         }}
       ></div> */}
-      <div className="text-center py-2 text-sm">&#169; Copyright 2023-2024</div>
+      <div className="text-center py-2 text-sm"> DOrSU Hotel</div>
     </footer>
   );
 };
