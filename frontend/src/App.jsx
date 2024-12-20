@@ -8,6 +8,7 @@ import ProtectedRoutes from "./components/auth/ProtectedRoutes";
 import ReservationPage from "./pages/ReservationPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import TransactionsPage from "./pages/TransactionsPage";
+import RoomsPage from "./pages/RoomsPage";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/" element={<MainLayout />}>
             <Route index element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/rooms" element={<RoomsPage />} />
             
             <Route
               path="/"
