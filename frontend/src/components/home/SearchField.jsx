@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -21,8 +21,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useAuth } from "@/context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import apiClient from "@/api/axios";
 
 const SearchField = () => {
+  const { token, isAuthenticated } = useAuth();
+  const navigate = useNavigate();
+
   const form = useForm({
     resolver: zodResolver(SearchSchema),
     defaultValues: {
@@ -32,9 +38,35 @@ const SearchField = () => {
       rate: "",
     },
   });
+
   const onSubmit = async (data) => {
-    console.log(data);
+    try {
+      const formData = {
+        category: data.category || "",
+        capacity: data.capacity || "",
+        bedType: data.bedType || "",
+        rate: data.rate || ""
+      }
+
+      const response = await apiClient.post(`/rooms`, formData, {
+        headers: {
+          Authorization: token,
+        },
+      });
+
+      if (response.status === 200) {
+        const searchData = response.data.data;
+        console.log(searchData);
+        // Navigate to search page with data
+        navigate("/search", {
+          state: { searchData },
+        });
+      }
+    } catch (error) {
+      console.error("Error during search:", error.message);
+    }
   };
+
   return (
     <div className="border bg-white  p-8 rounded-sm shadow-sm">
       <Form {...form}>
@@ -125,10 +157,9 @@ const SearchField = () => {
           />
           <div className="flex items-end">
             <Button className="py-6 w-[150px]" type="submit">
-            Search
-          </Button>
+              Search
+            </Button>
           </div>
-          
         </form>
       </Form>
     </div>

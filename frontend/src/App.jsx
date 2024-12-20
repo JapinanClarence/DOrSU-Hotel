@@ -9,6 +9,7 @@ import ReservationPage from "./pages/ReservationPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import TransactionsPage from "./pages/TransactionsPage";
 import RoomsPage from "./pages/RoomsPage";
+import SearchPage from "./pages/SearchPage";
 
 function App() {
   return (
@@ -20,7 +21,7 @@ function App() {
             <Route index element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/rooms" element={<RoomsPage />} />
-            
+
             <Route
               path="/"
               element={<ProtectedRoutes allowedRoles={["guest", "admin"]} />}
@@ -33,6 +34,7 @@ function App() {
             >
               <Route path="/reservations/checkout" element={<CheckoutPage />} />
               <Route path="/transactions" element={<TransactionsPage />} />
+              <Route path="/search" element={<SearchPage />} />
             </Route>
           </Route>
         </Route>
