@@ -69,7 +69,7 @@ const Header = () => {
                 <Button
                   variant="outline"
                   size="sm"
-                  onClick={() => navigate("/register")}
+                  onClick={() => navigate("/signup")}
                   className="hidden md:block"
                 >
                   Sign up

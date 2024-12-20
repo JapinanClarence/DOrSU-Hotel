@@ -10,6 +10,7 @@ import CheckoutPage from "./pages/CheckoutPage";
 import TransactionsPage from "./pages/TransactionsPage";
 import RoomsPage from "./pages/RoomsPage";
 import SearchPage from "./pages/SearchPage";
+import SignupPage from "./pages/SignupPage";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/" element={<MainLayout />}>
             <Route index element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignupPage />} />
             <Route path="/rooms" element={<RoomsPage />} />
 
             <Route
