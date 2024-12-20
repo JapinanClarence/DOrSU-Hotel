@@ -127,7 +127,7 @@ const CheckoutForm = ({ data }) => {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="0">Cash</SelectItem>
+                      <SelectItem value="0">Pay upon arrival</SelectItem>
                       <SelectItem value="1">GCash</SelectItem>
                       <SelectItem value="2">Card</SelectItem>
                     </SelectContent>
