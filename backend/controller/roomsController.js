@@ -5,7 +5,6 @@ export const searchRoom = async (req, res) => {
   const { category, capacity, bedType, rate } = req.body;
 
   try {
-    console.log(req.body)
     // Build the $or query array dynamically
     const orConditions = [];
 
