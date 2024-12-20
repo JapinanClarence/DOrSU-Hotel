@@ -41,12 +41,20 @@ const SearchField = () => {
 
   const onSubmit = async (data) => {
     try {
+      // Check if at least one field is filled
+      const isAnyFieldFilled =
+        data.category || data.capacity || data.bedType || data.rate;
+
+      if (!isAnyFieldFilled) {
+        console.error("At least one field must be filled.");
+        return; // Exit the function if no fields are filled
+      }
       const formData = {
         category: data.category || "",
         capacity: data.capacity || "",
         bedType: data.bedType || "",
-        rate: data.rate || ""
-      }
+        rate: data.rate || "",
+      };
 
       const response = await apiClient.post(`/rooms`, formData, {
         headers: {
