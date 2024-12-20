@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
+import { useAuth } from "@/context/AuthContext";
 const categoryMap = {
   0: "Non-airconditioned",
   1: "Airconditioned",
@@ -22,10 +23,9 @@ const bedTypeMap = {
   3: "King",
 };
 
-
 const RoomsCard = ({ data, onBooking }) => {
-    
-const availabilityMap = {
+  const { userData } = useAuth();
+  const availabilityMap = {
     0: { name: "Unavailable", color: "bg-red-500" },
     1: { name: "Available", color: "bg-green-600" },
   };
@@ -79,7 +79,18 @@ const availabilityMap = {
         </div>
       </CardContent>
       <CardFooter className="pb-5 px-5">
-        <Button onClick={() => onBooking(data)}>Book now</Button>
+        <Button
+          className={userData?.role == 0 && `hidden`}
+          onClick={() => onBooking(data)}
+        >
+          Book now
+        </Button>
+        <Button
+          className={userData?.role != 0 && `hidden`}
+          onClick={() => onBooking(data)}
+        >
+          Edit Room
+        </Button>
       </CardFooter>
     </Card>
   );

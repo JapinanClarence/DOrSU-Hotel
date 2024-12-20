@@ -14,8 +14,10 @@ import rainbowvortex from "@/assets/rainbowvortex.svg";
 import reactSvg from "@/assets/react.svg";
 import Footer from "@/components/nav/Footer";
 import { useAuth } from "@/context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
+  const navigate = useNavigate();
   const { userData } = useAuth();
 
   const images = [hotel1, hotel2, hotel3];
@@ -83,7 +85,8 @@ const HomePage = () => {
           <div className="px-40 py-10 mt-32 w-full">
             <HomeCarousel />
             <div className="flex justify-center mt-10">
-              <Button>See More</Button>
+              <Button onClick={() => navigate("/rooms")}>See More</Button>
+              
             </div>
           </div>
 
