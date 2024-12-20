@@ -100,8 +100,8 @@ const Header = () => {
                   <DropdownMenuContent>
                     <DropdownMenuLabel>My Account</DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem>Profile</DropdownMenuItem>
-                    <DropdownMenuItem className={userData.role == 0 && `hidden`}>Transactions</DropdownMenuItem>
+                    {/* <DropdownMenuItem>Profile</DropdownMenuItem> */}
+                    <DropdownMenuItem className={userData.role == 0 && `hidden`} onClick={()=> navigate("/transactions")}>Transactions</DropdownMenuItem>
                     <DropdownMenuItem  onClick={handleLogout}>Logout</DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>

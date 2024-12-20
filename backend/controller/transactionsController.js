@@ -31,6 +31,7 @@ export const getTransactions = async (req, res) => {
 
             return {
               id: reservation.id,
+              title: "Payment transaction",
               message: `You've paid ${log.details.paymentAmount} via ${paymentMethod} for your room reservation on ${new Date(
                 log.timestamp
               ).toLocaleString()}.`,
@@ -49,6 +50,7 @@ export const getTransactions = async (req, res) => {
             }
             return {
               id: reservation.id,
+              title: "Booking status",
               message: statusMessage,
               timestamp: log.timestamp,
             };

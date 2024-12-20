@@ -53,7 +53,7 @@ const DataTable = ({ data, loading, onApprove}) => {
   });
   const [globalFilter, setGlobalFilter] = React.useState("");
   // Define the columns where you want to apply the global filter
-  const filterColumns = ["fullname", "email", "category", "bedType"];
+  const filterColumns = ["fullname", "email", "category", "bedType", "rate", "paymentMethod"];
 
   const table = useReactTable({
     data,

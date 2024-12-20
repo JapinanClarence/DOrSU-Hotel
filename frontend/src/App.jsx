@@ -7,6 +7,7 @@ import { Toaster } from "./components/ui/toaster";
 import ProtectedRoutes from "./components/auth/ProtectedRoutes";
 import ReservationPage from "./pages/ReservationPage";
 import CheckoutPage from "./pages/CheckoutPage";
+import TransactionsPage from "./pages/TransactionsPage";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
               element={<ProtectedRoutes allowedRoles={["guest"]} />}
             >
               <Route path="/reservations/checkout" element={<CheckoutPage />} />
+              <Route path="/transactions" element={<TransactionsPage />} />
             </Route>
           </Route>
         </Route>
