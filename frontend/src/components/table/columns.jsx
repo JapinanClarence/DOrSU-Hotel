@@ -133,7 +133,7 @@ export const columns = (onApprove) => [
       return (
         <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" className="h-5 w-5 p-0 text-muted-foreground">
+          <Button variant="ghost" className="p-0 px-2 text-muted-foreground border border-zinc-300">
             {/* <span className="sr-only">Open menu</span> */}
             {`Adult: ${reservation.numberOfGuests?.adult}`} <ChevronDown className="h-4 w-4" />
           </Button>
@@ -247,6 +247,7 @@ export const columns = (onApprove) => [
             </DropdownMenuItem> */}
             <DropdownMenuSeparator />
             <DropdownMenuItem className={reservation.status != 0 && `hidden`} onClick={handleApprove}>Approve</DropdownMenuItem>
+            <DropdownMenuItem className={reservation.status != 4 && `hidden`} onClick={()=> console.log("checkout")}>Checkout</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );
