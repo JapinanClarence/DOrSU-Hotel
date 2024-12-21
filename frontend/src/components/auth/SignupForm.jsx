@@ -255,6 +255,7 @@ export function SignupForm({ className, ...props }) {
                 </div>
                 <Button
                   id="button"
+                  type="button"
                   variant="outline"
                   size="default"
                   className="rounded-md w-full "
