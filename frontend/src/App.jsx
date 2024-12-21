@@ -5,7 +5,7 @@ import MainLayout from "./components/layout/MainLayout";
 import LoginPage from "./pages/LoginPage";
 import { Toaster } from "./components/ui/toaster";
 import ProtectedRoutes from "./components/auth/ProtectedRoutes";
-import ReservationPage from "./pages/ReservationPage";
+import ReservationsPage from "./pages/ReservationsPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import TransactionsPage from "./pages/TransactionsPage";
 import RoomsPage from "./pages/RoomsPage";
@@ -28,7 +28,7 @@ function App() {
               path="/"
               element={<ProtectedRoutes allowedRoles={["guest", "admin"]} />}
             >
-              <Route path="/reservations" element={<ReservationPage />} />
+              <Route path="/reservations" element={<ReservationsPage />} />
             </Route>
             <Route
               path="/"

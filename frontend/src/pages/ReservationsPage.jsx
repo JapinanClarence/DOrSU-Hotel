@@ -5,7 +5,7 @@ import { useAuth } from "@/context/AuthContext";
 import UserReservationContent from "@/components/reservations/UserReservationContent";
 import AdminReservationContent from "@/components/reservations/AdminReservationContent";
 
-const ReservationPage = () => {
+const ReservationsPage = () => {
   const { userData } = useAuth();
   
   return (
@@ -25,4 +25,4 @@ const ReservationPage = () => {
   );
 };
 
-export default ReservationPage;
+export default ReservationsPage;

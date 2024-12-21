@@ -165,7 +165,7 @@ const SearchField = () => {
           />
           <div className="flex items-end">
             <Button className="py-6 w-[150px]" type="submit">
-              Search
+              Check Availability
             </Button>
           </div>
         </form>

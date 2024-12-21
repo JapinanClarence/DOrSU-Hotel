@@ -13,6 +13,7 @@ import { useToast } from "@/hooks/use-toast";
 import { formatDate } from "@/util/helpers";
 import RoomsCard from "@/components/rooms/RoomsCard";
 import { Button } from "@/components/ui/button";
+
 const SearchPage = () => {
   const location = useLocation();
   const [roomData, setRoomData] = useState([]);
@@ -89,7 +90,7 @@ const SearchPage = () => {
       <div className="h-screen">
         <Header />
         <div className="px-40 py-10 bg-zinc-200">
-          <h1 className="text-xl font-medium font-accent">Rooms</h1>
+          <h1 className="text-xl font-medium font-accent">Available Rooms</h1>
         </div>
         {searchData.length > 0 ? (
           <div className="px-40 py-10 grid grid-cols-1 md:grid-cols-4 gap-4">
