@@ -68,6 +68,7 @@ export const getUserBookings = async (req, res) => {
         checkOut: data.checkOut,
         numberOfGuests: data.numberOfGuests,
         status: data.status,
+        name: data.room.name,
         category: data.room.category,
         description: data.room.description,
         capacity: data.room.capacity,

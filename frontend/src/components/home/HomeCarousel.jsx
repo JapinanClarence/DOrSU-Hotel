@@ -151,6 +151,7 @@ const HomeCarousel = () => {
                       <div className={`h-56 bg-slate-200`}></div>
                     </CardHeader>
                     <CardContent className="p-5">
+                      <CardTitle className="text-md">{data.name}</CardTitle>
                       <CardDescription>{data.description}</CardDescription>
                       <div className="mt-5">
                         {/* {badgeDetails.name && (
@@ -211,7 +212,7 @@ const HomeCarousel = () => {
         <CarouselPrevious />
         <CarouselNext />
       </Carousel>
-      {/* <BookingDialog
+      <BookingDialog
         open={bookingDialog}
         onOpenChange={showBookingDialog}
         form={form}
@@ -219,7 +220,7 @@ const HomeCarousel = () => {
         isSubmitting={isSubmitting}
         errorMessage={errorMessage}
         data={currentRoom}
-      /> */}
+      />
     </>
   );
 };

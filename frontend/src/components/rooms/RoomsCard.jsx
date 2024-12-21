@@ -14,7 +14,7 @@ import { useAuth } from "@/context/AuthContext";
 const categoryMap = {
   0: "Standard",
   1: "Suite",
-  2: "Family"
+  2: "Family",
 };
 
 const bedTypeMap = {
@@ -26,15 +26,8 @@ const bedTypeMap = {
 
 const RoomsCard = ({ data, onBooking }) => {
   const { userData } = useAuth();
-  const availabilityMap = {
-    0: { name: "Unavailable", color: "bg-red-500" },
-    1: { name: "Available", color: "bg-green-600" },
-  };
 
-  const badgeCategory = availabilityMap[data.availability] || {
-    name: "Unknown",
-    color: "bg-gray-500",
-  };
+  const specialOffers = data.specialOffers;
 
   return (
     <Card className="">
@@ -42,15 +35,36 @@ const RoomsCard = ({ data, onBooking }) => {
         <div className={`h-56 bg-slate-200`}></div>
       </CardHeader>
       <CardContent className="p-5">
+        <CardTitle className="text-md">{data.name}</CardTitle>
         <CardDescription>{data.description}</CardDescription>
         <div className="mt-5">
-          {/* {badgeCategory.name && (
-            <Badge
-              className={` hidden md:inline ${badgeCategory.color} text-white hover:${badgeCategory.color}`}
-            >
-              {badgeCategory.name}
-            </Badge>
-          )} */}
+          <div className="flex gap-2">
+            {specialOffers.length > 0 &&
+              specialOffers.map((data) => {
+                const ammenitiesMap = {
+                  0: { name: `${data.description}`, color: "bg-amber-300" },
+                  1: { name: "Free Wifi", color: "bg-amber-300" },
+                  2: { name: "Free Breakfast", color: "bg-amber-300" },
+                  3: { name: "Free Parking", color: "bg-amber-300" },
+                  4: { name: "Welcome refreshments", color: "bg-amber-300" },
+                  5: { name: "Early access", color: "bg-amber-300" },
+                };
+
+                const badgeCategory = ammenitiesMap[data.type] || {
+                  name: "Unknown",
+                  color: "bg-gray-500",
+                };
+
+                return badgeCategory.name ? (
+                  <Badge
+                    key={data._id} // Ensure you have a unique key
+                    className={`hidden md:inline ${badgeCategory.color} text-white hover:${badgeCategory.color}`}
+                  >
+                    {badgeCategory.name}
+                  </Badge>
+                ) : null;
+              })}
+          </div>
           <div className="flex justify-between">
             <div className="flex-shrink text-sm">
               <Settings2 className="my-auto inline" size={18} /> Category
@@ -75,7 +89,12 @@ const RoomsCard = ({ data, onBooking }) => {
             <div className="flex-shrink text-sm">
               <PhilippinePeso className="my-auto inline" size={18} /> Rate
             </div>
-            <p className="col-span-4 font-medium">{data.rate}</p>
+            <p className={data.discount > 0 ? `hidden` : `col-span-4 font-medium`}>
+              {data.rate}
+            </p>
+            <p className={data.discount > 0 ? `col-span-4 font-medium` : `hidden`}>
+              {data.discount} <span className="line-through text-muted-foreground font-normal">{data.rate}</span>
+            </p>
           </div>
         </div>
       </CardContent>

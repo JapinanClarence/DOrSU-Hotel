@@ -39,9 +39,32 @@ const RoomsPage = () => {
   const fetchRooms = async () => {
     try {
       const { data } = await apiClient.get("/rooms");
-
+  
       if (data.success) {
-        setRoomData(data.data);
+        const roomData = data.data.map((data) => {
+          // Calculate the discounted price if there are special offers and the discount is greater than 0
+          const discountedPrice = data.specialOffers.reduce((acc, offer) => {
+            if (offer.discount > 0) { // Only apply discount if it's greater than 0
+              const discountAmount = (data.rate * offer.discount) / 100; // Calculate discount amount
+              acc = data.rate - discountAmount; // Subtract the discount from the rate
+            }
+            return acc;
+          }, data.rate); // Default to the original rate if no discount is applied
+  
+          return {
+            _id: data._id,
+            name: data.name,
+            category: data.category,
+            description: data.description,
+            availability: data.availability,
+            capacity: data.capacity,
+            bedType: data.bedType,
+            rate: data.rate,
+            discount: discountedPrice !== data.rate ? discountedPrice : null, // Return discount only if changed
+            specialOffers: data.specialOffers,
+          };
+        });
+        setRoomData(roomData); // Update state with the mapped room data
       } else {
         setRoomData([]);
       }
@@ -51,6 +74,7 @@ const RoomsPage = () => {
       setLoading(false);
     }
   };
+  
 
   useEffect(() => {
     fetchRooms();

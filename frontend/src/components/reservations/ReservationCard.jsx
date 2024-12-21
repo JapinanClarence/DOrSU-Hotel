@@ -52,6 +52,7 @@ const ReservationCard = ({ data, onPay, onCheckOut, onClick }) => {
         <div className={`h-40 bg-slate-200`}></div>
       </CardHeader>
       <CardContent className="p-4">
+        <CardTitle className="text-md">{data.name}</CardTitle>
         <CardDescription>{data.description}</CardDescription>
         <div className="mt-5 flex justify-end">
           {badgeCategory.name && (

@@ -21,6 +21,7 @@ import { LoaderCircle } from "lucide-react";
 import { Alert, AlertDescription } from "../ui/alert";
 import { BedSingle, PhilippinePeso, Settings2, Users } from "lucide-react";
 import { Badge } from "../ui/badge";
+import { Separator } from "../ui/separator";
 const categoryMap = {
   0: "Standard",
   1: "Suite",
@@ -57,8 +58,8 @@ const BookingDialog = ({
             Fill out the necessary details to reserve your desired room. Ensure
             all information is accurate to confirm your booking successfully.
           </DialogDescription>
-          <div className="flex justify-between">
-            <div className="space-y-4">
+          <div className="flex gap-5">
+            <div className="space-y-4 flex-1">
               <h1 className="text-sm font-semibold">Room information</h1>
               {/* {badgeDetails.name && (
                 <Badge
@@ -67,6 +68,10 @@ const BookingDialog = ({
                   {badgeDetails.name}
                 </Badge>
               )} */}
+              <div>
+                <h1 className="text-md font-medium border-b border-zinc-300">{data.name}</h1>
+              </div>
+              {/* <Separator className=""/> */}
               <div className="flex flex-col justify-between">
                 <div className="flex-shrink text-sm font-medium">Category</div>
                 <p className="col-span-4 text-sm text-muted-foreground">
@@ -90,7 +95,7 @@ const BookingDialog = ({
                 </p>
               </div>
             </div>
-            <div>
+            <div className="">
               <Form {...form}>
                 <form
                   onSubmit={form.handleSubmit(onSubmit)}

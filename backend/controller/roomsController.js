@@ -38,7 +38,7 @@ export const searchRoom = async (req, res) => {
 
 export const getRooms = async (req, res) => {
   try {
-    const rooms = await Rooms.find({availability:1 }).sort({createdAt: -1});
+    const rooms = await Rooms.find({ availability: 1 }).sort({ createdAt: -1 });
 
     if (rooms <= 0) {
       return res.status(200).json({
@@ -46,6 +46,17 @@ export const getRooms = async (req, res) => {
         message: "No rooms found",
       });
     }
+
+    // const roomData = rooms.map((data) => {
+    //   return { _id: data._id, name: data.name, category: data.category,
+    //     description:data.description,
+    //     availability: data.availability,
+    //     capacity:data.capacity,
+    //     bedType: data.bedType,
+    //     rate: data.rate,
+
+    //    };
+    // });
 
     return res.status(200).json({
       success: true,
