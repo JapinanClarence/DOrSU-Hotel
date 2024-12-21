@@ -28,8 +28,9 @@ import { formatDate } from "@/util/helpers";
 import { Badge } from "../ui/badge";
 
 const categoryMap = {
-  0: "Non-airconditioned",
-  1: "Airconditioned",
+  0: "Standard",
+  1: "Suite",
+  2: "Family"
 };
 
 const bedTypeMap = {
@@ -105,7 +106,7 @@ const HomeCarousel = () => {
         },
         room: currentRoom._id,
       };
-      console.log(formData);
+
       setIsSubmitting(true);
       const res = await apiClient.post("/booking", formData, {
         headers: {
@@ -152,13 +153,13 @@ const HomeCarousel = () => {
                     <CardContent className="p-5">
                       <CardDescription>{data.description}</CardDescription>
                       <div className="mt-5">
-                        {badgeDetails.name && (
+                        {/* {badgeDetails.name && (
                           <Badge
                             className={` hidden md:inline ${badgeDetails.color} text-white hover:${badgeDetails.color}`}
                           >
                             {badgeDetails.name}
                           </Badge>
-                        )}
+                        )} */}
                         <div className="flex justify-between">
                           <div className="flex-shrink text-sm">
                             <Settings2 className="my-auto inline" size={18} />{" "}
@@ -210,7 +211,7 @@ const HomeCarousel = () => {
         <CarouselPrevious />
         <CarouselNext />
       </Carousel>
-      <BookingDialog
+      {/* <BookingDialog
         open={bookingDialog}
         onOpenChange={showBookingDialog}
         form={form}
@@ -218,7 +219,7 @@ const HomeCarousel = () => {
         isSubmitting={isSubmitting}
         errorMessage={errorMessage}
         data={currentRoom}
-      />
+      /> */}
     </>
   );
 };

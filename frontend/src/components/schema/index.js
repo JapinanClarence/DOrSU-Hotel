@@ -34,7 +34,7 @@ export const SignupSchema = z
 export const SearchSchema = z.object({
   category: z.preprocess(
     (val) => (val === "" ? undefined : val),
-    z.enum(["0", "1"]).optional()
+    z.enum(["0", "1","2"]).optional()
   ),
   capacity: z.preprocess(
     (val) => (val === "" || val == null ? undefined : Number(val)),

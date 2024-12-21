@@ -9,10 +9,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import DataTable from "../table/DataTable";
 import { formatDate } from "@/util/helpers";
 
-const categoryMap ={
-    0: "Non-airconditioned",
-    1: "Airconditioned",
-}
+const categoryMap = {
+  0: "Standard",
+  1: "Suite",
+  2: "Family"
+};
 const bedTypeMap = {
     0: "Single",
     1: "Double",

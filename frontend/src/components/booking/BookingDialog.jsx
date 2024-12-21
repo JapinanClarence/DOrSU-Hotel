@@ -22,8 +22,9 @@ import { Alert, AlertDescription } from "../ui/alert";
 import { BedSingle, PhilippinePeso, Settings2, Users } from "lucide-react";
 import { Badge } from "../ui/badge";
 const categoryMap = {
-  0: "Non-airconditioned",
-  1: "Airconditioned",
+  0: "Standard",
+  1: "Suite",
+  2: "Family"
 };
 
 const bedTypeMap = {
@@ -59,13 +60,13 @@ const BookingDialog = ({
           <div className="flex justify-between">
             <div className="space-y-4">
               <h1 className="text-sm font-semibold">Room information</h1>
-              {badgeDetails.name && (
+              {/* {badgeDetails.name && (
                 <Badge
                   className={` hidden md:inline ${badgeDetails.color} text-white hover:${badgeDetails.color}`}
                 >
                   {badgeDetails.name}
                 </Badge>
-              )}
+              )} */}
               <div className="flex flex-col justify-between">
                 <div className="flex-shrink text-sm font-medium">Category</div>
                 <p className="col-span-4 text-sm text-muted-foreground">

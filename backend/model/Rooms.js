@@ -1,8 +1,10 @@
 import mongoose from "mongoose";
+
 /**
  * category:
- * 0 - non-air
- * 1 - air conditioned
+ * 0 - Standard
+ * 1 - Suite
+ * 2 - Family
  * availability:
  * 0 - not available
  * 1 - available
@@ -16,7 +18,7 @@ const roomsSchema = new mongoose.Schema(
   {
     category: {
       type: String,
-      enum: ["0", "1"],
+      enum: ["0", "1", "2"],
     },
     availability: {
       type: String,
@@ -37,6 +39,14 @@ const roomsSchema = new mongoose.Schema(
       type: Number,
       required: [true, "Rate is required"],
     },
+    specialOffers: [
+      {
+        name: { type: String, required: true }, // e.g., "Free Breakfast", "10% Discount"
+        description: { type: String }, // Optional description of the offer
+        discount: { type: Number, min: 0, max: 100 }, // Percentage discount, e.g., 10 for 10%
+        active: { type: Boolean, default: true }, // Whether the offer is currently active
+      },
+    ],
   },
   { timestamps: true }
 );

@@ -176,7 +176,7 @@ export const payReservation = async (req, res) => {
       });
     }
 
-    if (booking.status != 1) {
+    if (booking.status != "1") {
       return res.status(400).json({
         success: false,
         message: "Reservation is waiting for approval, please try again later.",
@@ -185,44 +185,66 @@ export const payReservation = async (req, res) => {
 
     const room = await Rooms.findById(booking.room);
 
-    if (paymentAmount !== room.rate) {
-      return res.status(400).json({
+    if (!room) {
+      return res.status(404).json({
         success: false,
-        message:
-          "Payment amount does not match the room rate. Please enter the correct amount.",
+        message: "Room not found",
       });
     }
+
+    // Calculate discounted price
+    const activeDiscount = room.specialOffers?.find(
+      (offer) => offer.active && offer.discount
+    );
+
+    const discountAmount = activeDiscount
+      ? (room.rate * activeDiscount.discount) / 100
+      : 0;
+
+    const discountedPrice = room.rate - discountAmount;
+
+    if (paymentAmount !== discountedPrice) {
+      return res.status(400).json({
+        success: false,
+        message: `Payment amount does not match the discounted price. Please pay the correct amount of ${discountedPrice}.`,
+      });
+    }
+
     // Update payment details
     booking.paymentAmount = paymentAmount;
     booking.paymentMethod = paymentMethod;
     booking.status = "4";
-    
-   // Add a log entry for the payment
-   booking.logs.push({
-    eventType: "0", // Event type 0 for payments
-    details: {
-      paymentAmount,
-      paymentMethod,
-      status: "4", // Explicitly log the payment status
-    },
-    timestamp: new Date(),
-  });
 
+    // Add a log entry for the payment
+    booking.logs.push({
+      eventType: "0", // Event type 0 for payments
+      details: {
+        paymentAmount,
+        paymentMethod,
+        discountApplied: activeDiscount
+          ? `${activeDiscount.discount}% (${discountAmount})`
+          : "No discount",
+        status: "4", // Explicitly log the payment status
+      },
+      timestamp: new Date(),
+    });
 
-    // Save the updated reservation
     await booking.save();
 
     res.status(200).json({
       success: true,
-      message: "Payment recorded successfully",
+      message: "Payment successful",
+      data: booking,
     });
-  } catch (err) {
-    return res.status(500).json({
+  } catch (error) {
+    console.error("Error processing payment:", error);
+    res.status(500).json({
       success: false,
-      message: err.message,
+      message: "An error occurred during payment processing.",
     });
   }
 };
+
 
 export const updateStatus = async (req, res) => {
   const bookingId = req.params.id;

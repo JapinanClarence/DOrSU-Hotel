@@ -12,8 +12,9 @@ import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import { useAuth } from "@/context/AuthContext";
 const categoryMap = {
-  0: "Non-airconditioned",
-  1: "Airconditioned",
+  0: "Standard",
+  1: "Suite",
+  2: "Family"
 };
 
 const bedTypeMap = {
@@ -43,13 +44,13 @@ const RoomsCard = ({ data, onBooking }) => {
       <CardContent className="p-5">
         <CardDescription>{data.description}</CardDescription>
         <div className="mt-5">
-          {badgeCategory.name && (
+          {/* {badgeCategory.name && (
             <Badge
               className={` hidden md:inline ${badgeCategory.color} text-white hover:${badgeCategory.color}`}
             >
               {badgeCategory.name}
             </Badge>
-          )}
+          )} */}
           <div className="flex justify-between">
             <div className="flex-shrink text-sm">
               <Settings2 className="my-auto inline" size={18} /> Category

@@ -38,7 +38,7 @@ export const searchRoom = async (req, res) => {
 
 export const getRooms = async (req, res) => {
   try {
-    const rooms = await Rooms.find().sort({createdAt: -1});
+    const rooms = await Rooms.find({availability:1 }).sort({createdAt: -1});
 
     if (rooms <= 0) {
       return res.status(200).json({

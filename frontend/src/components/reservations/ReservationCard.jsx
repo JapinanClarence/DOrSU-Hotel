@@ -11,10 +11,10 @@ import { Button } from "@/components/ui/button";
 import { BedSingle, PhilippinePeso, Settings2, Users } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 const categoryMap = {
-  0: "Non-airconditioned",
-  1: "Airconditioned",
+  0: "Standard",
+  1: "Suite",
+  2: "Family"
 };
-
 const bedTypeMap = {
   0: "Single",
   1: "Double",
@@ -45,6 +45,7 @@ const ReservationCard = ({ data, onPay, onCheckOut, onClick }) => {
     e.stopPropagation(); 
     onCheckOut(data.id);
   }
+  console.log(data)
   return (
     <Card className="" onClick={() => onClick(data.id)}>
       <CardHeader className="p-0">
@@ -88,12 +89,15 @@ const ReservationCard = ({ data, onPay, onCheckOut, onClick }) => {
           </div>
         </div>
       </CardContent>
-      <CardFooter className="pb-4 px-4">
-        <Button size="sm" className={data.status == 4 ? `hidden` :"text-xs"} onClick={handlePayment}>
+      <CardFooter className="pb-4 px-4 flex gap-2">
+        <Button size="sm" className={data.status == 4 || data.status == 0 ? `hidden` :"text-xs"} onClick={handlePayment}>
           Go to payment
         </Button>
         <Button size="sm" className={data.status == 4 ? `text-xs` :"hidden"} onClick={handleCheckOutClick}>
           Checkout
+        </Button>
+        <Button size="sm" className={data.status == 4  ? `hidden` :"text-xs border-zinc-300"} variant="outline" onClick={handleCheckOutClick}>
+          Cancel Reservation
         </Button>
       </CardFooter>
     </Card>

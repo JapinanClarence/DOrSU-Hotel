@@ -95,8 +95,9 @@ const SearchField = () => {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="1">Airconditioned</SelectItem>
-                    <SelectItem value="0">Non-airconditioned</SelectItem>
+                    <SelectItem value="0">Standard</SelectItem>
+                    <SelectItem value="1">Suite</SelectItem>
+                    <SelectItem value="2">Family</SelectItem>
                   </SelectContent>
                 </Select>
               </FormItem>
