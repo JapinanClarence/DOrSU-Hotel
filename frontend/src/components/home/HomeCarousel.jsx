@@ -30,7 +30,7 @@ import { Badge } from "../ui/badge";
 const categoryMap = {
   0: "Standard",
   1: "Suite",
-  2: "Family"
+  2: "Family",
 };
 
 const bedTypeMap = {
@@ -142,6 +142,7 @@ const HomeCarousel = () => {
       >
         <CarouselContent>
           {roomData.map((data, index) => {
+            const specialOffers = data.specialOffers;
             const badgeDetails = availabilityMap[data.availability] || {};
             return (
               <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
@@ -154,13 +155,50 @@ const HomeCarousel = () => {
                       <CardTitle className="text-md">{data.name}</CardTitle>
                       <CardDescription>{data.description}</CardDescription>
                       <div className="mt-5">
-                        {/* {badgeDetails.name && (
-                          <Badge
-                            className={` hidden md:inline ${badgeDetails.color} text-white hover:${badgeDetails.color}`}
-                          >
-                            {badgeDetails.name}
-                          </Badge>
-                        )} */}
+                        <div className="flex gap-2">
+                          {specialOffers.length > 0 &&
+                            specialOffers.map((data) => {
+                              const ammenitiesMap = {
+                                0: {
+                                  name: `${data.description}`,
+                                  color: "bg-amber-300",
+                                },
+                                1: { name: "Free Wifi", color: "bg-amber-300" },
+                                2: {
+                                  name: "Free Breakfast",
+                                  color: "bg-amber-300",
+                                },
+                                3: {
+                                  name: "Free Parking",
+                                  color: "bg-amber-300",
+                                },
+                                4: {
+                                  name: "Welcome refreshments",
+                                  color: "bg-amber-300",
+                                },
+                                5: {
+                                  name: "Early access",
+                                  color: "bg-amber-300",
+                                },
+                              };
+
+                              const badgeCategory = ammenitiesMap[
+                                data.type
+                              ] || {
+                                name: "Unknown",
+                                color: "bg-gray-500",
+                              };
+
+                              return badgeCategory.name ? (
+                                <Badge
+                                  key={data._id} // Ensure you have a unique key
+                                  className={`hidden md:inline ${badgeCategory.color} text-white hover:${badgeCategory.color}`}
+                                >
+                                  {badgeCategory.name}
+                                </Badge>
+                              ) : null;
+                            })}
+                        </div>
                         <div className="flex justify-between">
                           <div className="flex-shrink text-sm">
                             <Settings2 className="my-auto inline" size={18} />{" "}
@@ -224,6 +262,5 @@ const HomeCarousel = () => {
     </>
   );
 };
-
 
 export default HomeCarousel;
