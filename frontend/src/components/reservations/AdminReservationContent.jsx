@@ -58,6 +58,7 @@ const AdminReservationContent = () => {
         const tableData = data.data.map((data)=>{
            return {
                 id: data.id,
+                name: data.name,
                 checkIn: data.checkIn,
                 checkOut: data.checkOut,
                 rate: data.rate,

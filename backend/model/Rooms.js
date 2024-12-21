@@ -13,9 +13,17 @@ import mongoose from "mongoose";
  * 1 - double
  * 2 - queen
  * 3 - king
+* specialOffers:
+ * 0 - discount 
+ * 1 - free wifi 
+ * 2 - free breakfast 
+ * 3 - Free Parking
+ * 4 - Welcome Drinks or Snacks
+ * 5 - Early Check-In / Late Check-Out
  */
 const roomsSchema = new mongoose.Schema(
   {
+    name: {type: String, required:[true, "Room name is required"]},
     category: {
       type: String,
       enum: ["0", "1", "2"],
@@ -41,7 +49,7 @@ const roomsSchema = new mongoose.Schema(
     },
     specialOffers: [
       {
-        name: { type: String, required: true }, // e.g., "Free Breakfast", "10% Discount"
+        type: { type: String, enum: ["0", "1", "2", "3", "4", "5"] }, // e.g., "Free Breakfast", "10% Discount"
         description: { type: String }, // Optional description of the offer
         discount: { type: Number, min: 0, max: 100 }, // Percentage discount, e.g., 10 for 10%
         active: { type: Boolean, default: true }, // Whether the offer is currently active

@@ -57,16 +57,9 @@ export const columns = (onApprove) => [
     cell: ({ row }) => <div className="text-xs">{row.getValue("email")}</div>,
   },
   {
-    accessorKey: "bedType",
-    header: "Bed Type",
-    cell: ({ row }) => <div className="text-xs">{row.getValue("bedType")}</div>,
-  },
-  {
-    accessorKey: "category",
-    header: "Category",
-    cell: ({ row }) => (
-      <div className="text-xs">{row.getValue("category")}</div>
-    ),
+    accessorKey: "name",
+    header: "Room Name",
+    cell: ({ row }) => <div className="text-xs">{row.getValue("name")}</div>,
   },
   {
     accessorKey: "rate",

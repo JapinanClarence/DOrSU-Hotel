@@ -206,7 +206,7 @@ export const payReservation = async (req, res) => {
     if (paymentAmount !== discountedPrice) {
       return res.status(400).json({
         success: false,
-        message: `Payment amount does not match the discounted price. Please pay the correct amount of ${discountedPrice}.`,
+        message: `Payment amount does not match the price. Please pay the correct amount of ${discountedPrice}.`,
       });
     }
 
@@ -234,7 +234,6 @@ export const payReservation = async (req, res) => {
     res.status(200).json({
       success: true,
       message: "Payment successful",
-      data: booking,
     });
   } catch (error) {
     console.error("Error processing payment:", error);
@@ -359,6 +358,7 @@ export const getBookings = async (req, res) => {
         checkIn: data.checkIn,
         checkOut: data.checkOut,
         numberOfGuests: data.numberOfGuests,
+        name: data.room.name,
         status: data.status,
         category: data.room.category,
         description: data.room.description,
